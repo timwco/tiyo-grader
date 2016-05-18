@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "TIYO: Stats, Grades & Percent Calculator",
+  "description": "...",
+  "version": "1.0.0",
+
+  "content_scripts": [ {
+      "js": [ "assets/js/jquery.js", "assets/js/lodash.js", "assets/js/index.js" ],
+      "css": [ "assets/css/main.css" ],
+      "matches": [
+        "https://online.theironyard.com/admin"
+      ]
+   } ],
+
+  "icons": { "16": "assets/images/icon16.png", "48": "assets/images/icon48.png", "128": "assets/images/icon128.png" },
+
+  // "options_page": "options.html",
+
+  "permissions": [
+    "https://online.theironyard.com/",
+    "storage"
+  ]
+}
