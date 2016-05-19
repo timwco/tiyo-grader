@@ -71,7 +71,14 @@
       student.points = 0;
       student.statuses['Complete and satisfactory'].forEach( complete => {
         if (complete.match(/\*\*/)) {
-          student.points = student.points + 3; // weekend assignment
+          student.points = student.points + 4; // weekend assignment
+        } else {
+          student.points = student.points + 1;
+        }
+      });
+      student.statuses['Exceeds expectations'].forEach( complete => {
+        if (complete.match(/\*\*/)) {
+          student.points = student.points + 4; // weekend assignment
         } else {
           student.points = student.points + 1;
         }
@@ -82,7 +89,7 @@
     let totalPoints = 0;
     students[0].assignments.forEach( assignment => {
       if (assignment.name.match(/\*\*/)) {
-        totalPoints = totalPoints + 3; // weekend assignment
+        totalPoints = totalPoints + 4; // weekend assignment
       } else {
         totalPoints = totalPoints + 1;
       }
@@ -114,17 +121,22 @@
       
       let complete = student.statuses['Complete and satisfactory'].length + student.statuses['Exceeds expectations'].length;
       
-      let incomplete = student.statuses['Incomplete'].length + student.statuses['Complete and unsatisfactory'].length;
+      let incomplete = student.statuses['Not Submitted'].length + student.statuses['Incomplete'].length + student.statuses['Complete and unsatisfactory'].length;
       
       let grade = Math.floor((student.points / totalPoints) * 100);
       
+      let color = function () {
+        if (grade > 80) return '#6fbbb7';
+        if (grade > 70) return '#f0ad4e';
+        if (grade < 70) return '#e74c3c';
+        
+      }
+      
       tableBody += `<tr>`;
       tableBody += `<td><span class="user-profile-name">${ student.name }</span></td>`;
-      tableBody += `<td>${ student.statuses['Not graded'].length }</td>`;
-      tableBody += `<td>${ student.statuses['Not Submitted'].length }</td>`;
-      tableBody += `<td>${ incomplete }</td>`;
-      tableBody += `<td>${ complete }</td>`;
-      tableBody += `<td>${ grade }</td>`;
+      tableBody += `<td><label class="label label-incomplete">${ incomplete }</td></label>`;
+      tableBody += `<td><label class="label label-complete-and-satisfactory">${ complete }</label></td>`;
+      tableBody += `<td colspan="3"><span class="profile-placeholder-medium" style="background-color: ${ color() }">${ grade }</span></td>`;
       tableBody += `<tr>`;
       
     });
@@ -135,11 +147,9 @@
           <thead class="thead-default">
             <tr>
               <th>Name</th>
-              <th>Submitted</th>
-              <th>Missing</th>
-              <th>Incomplete</th>
+              <th>Missing/Incomplete</th>
               <th>Complete</th>
-              <th>Grade</th>
+              <th colspan="3">Grade</th>
             </tr>
           </thead>
           <tbody>
