@@ -7,7 +7,7 @@ It will remove anyone who has never completed an assignment (TA's, Observers, et
 You need to open the *options* page and set your path ID for the extension to work.
 
 
-##### How this works
+#### How this works
 
 Here's how I do grading...
 
