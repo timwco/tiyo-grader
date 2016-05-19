@@ -1,13 +1,18 @@
 ;(function () {
   
   'use strict';
-  
-  let baseURL   = 'https://online.theironyard.com'
-  let pathURL   = baseURL + '/admin/paths/100';
-  let userURL   = baseURL + '/admin/users/';
-  
    
-  function init () {
+  function init (pathID) {
+    
+    if (pathID) {
+      preloadView();
+    } else {
+      return alert('Sorry, you need to set a path first in the extension options.');
+    }
+    
+    let baseURL   = 'https://online.theironyard.com'
+    let pathURL   = baseURL + '/admin/paths/' + pathID;
+    
     // Get the list of students
     $.get(pathURL).then( (res) => {
           
@@ -44,6 +49,11 @@
       });
        
     });    
+  }
+  
+  function preloadView () {
+    let nav = $('.nav-tabs');
+    nav.append(`<li id="tw_grades" class="nav-item"><a href="#statuses" class="nav-link" data-toggle="tab">Loading Grades...</a></li>`); 
   }
   
   
@@ -103,8 +113,7 @@
         
     let tableHTML = statusesTemplate(students, totalPoints);
     
-    let nav = $('.nav-tabs');
-    nav.append(`<li class="nav-item"><a href="#statuses" class="nav-link" data-toggle="tab">Statuses</a></li>`);
+    $('#tw_grades a').text('View Grades');
     
     let tabs = $('.tab-content');
     tabs.append(`<div id="statuses" class="tab-pane" aria-expanded="true">${ tableHTML }</div>`);
@@ -159,9 +168,11 @@
       </div>    
     `;
   }
- 
   
-  init(); // Run the plugin
+  
+  chrome.storage.sync.get(['path'], function(items) {
+    init(items.path);
+  });
   
 }());
 

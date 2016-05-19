@@ -15,7 +15,7 @@
 
   "icons": { "16": "assets/images/icon16.png", "48": "assets/images/icon48.png", "128": "assets/images/icon128.png" },
 
-  // "options_page": "options.html",
+  "options_page": "options/options.html",
 
   "permissions": [
     "https://online.theironyard.com/",
