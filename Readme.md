@@ -4,7 +4,14 @@ This is a Chome extension that runs on TIYO's Dashboard and will show you the cu
 
 It will remove anyone who has never completed an assignment (TA's, Observers, etc)
 
-You need to open the `options` page and set your Path & Assignments Unit ID for the extension to work. See the [Gettting the ID's]() below.
+You need to open the `options` page and set your Path & Assignments Unit ID for the extension to work. See the [Gettting the ID's](#getting-the-ids) below.
+
+#### Installation
+
+1. Clone this repo
+2. Open Chrome Settings (`cmd + ,`)
+3. Click `Load unpacked extension...`
+4. Navigate to this folder and choose `select`
 
 #### TIYO Setup
 
