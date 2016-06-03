@@ -1,29 +1,30 @@
 
 var form      = document.querySelector('#path_form');
 var pathField = document.querySelector('.path');
+var unitField = document.querySelector('.unit');
 
-form.addEvent
-
-function init (path) {
+function init (items) {
   
-  if (path) pathField.value = path;
+  if (items.path) pathField.value = items.path;
+  if (items.unit) unitField.value = items.unit;
   
-  form.addEventListener('submit', updatePath);
+  form.addEventListener('submit', updateOptions);
   
 }
 
-function updatePath (event) {
+function updateOptions (event) {
   event.preventDefault();
   
   let path = pathField.value;
+  let unit = unitField.value;
  
-  chrome.storage.sync.set({'path': path }, () => {
-    alert('Path ID Saved!');
+  chrome.storage.sync.set({'path': path, 'unit': unit }, () => {
+    alert('Options Saved!');
   });
   
 }
 
 
-chrome.storage.sync.get(['path'], function(items) {
-  init(items.path);
+chrome.storage.sync.get(['path', 'unit'], function(items) {
+  init(items);
 });

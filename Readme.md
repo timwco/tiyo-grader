@@ -4,7 +4,33 @@ This is a Chome extension that runs on TIYO's Dashboard and will show you the cu
 
 It will remove anyone who has never completed an assignment (TA's, Observers, etc)
 
-You need to open the *options* page and set your path ID for the extension to work.
+You need to open the `options` page and set your Path & Assignments Unit ID for the extension to work. See the [Gettting the ID's]() below.
+
+#### TIYO Setup
+
+In order for this to work properly, you need a bit of setup to happen:
+
+1. You need a unit that contains your assignments only.
+2. You need to mark any "Weekend" assignments with the chars `**`
+  - I use a simple regex to look for that in the title
+  - Example: `Surf & Paddle HTML/CSS Slice Assignment **`
+
+#### Getting the ID's
+
+You'll need two different ID's for this to work. 
+
+- Path ID
+  - This is the path ID. Best place to get it is from your URL.
+  - The URL _should_ look like : `https://online.theironyard.com/admin/paths/100`
+  - Just grab the last numbers (100) and that becomes your Path ID
+- Assignments Unit ID
+  - As mentioned above, you need to store all of your assignments inside of a specific unit for this to work.
+  - To get the ID, just visit your path page (`https://online.theironyard.com/admin/paths/XXX`)
+  - On that page, use the Chrome inspector and inspect the unit you want to use. It will look _something_ like the screenshot below.
+  - Notice the ID at at end like `data-id="gid://online/Unit/950"`
+  - Grab that last id (950) and that becomes your Assignment Path ID
+
+![ScreenShot](http://image.prntscr.com/image/f36e211742d84000bc2d87aaa96d1993.png)
 
 
 #### How this works

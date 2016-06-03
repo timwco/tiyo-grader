@@ -2,21 +2,23 @@
   
   'use strict';
    
-  function init (pathID) {
+  function init (items) {
     
-    if (pathID) {
+    if (items.path && items.unit) {
       preloadView();
     } else {
-      return alert('Sorry, you need to set a path first in the extension options.');
+      return alert('Sorry, you need to set your options first in the extension options.');
     }
     
-    let baseURL   = 'https://online.theironyard.com'
-    let pathURL   = baseURL + '/admin/paths/' + pathID;
+    const ASSIGNMENT_UNIT = items.unit,
+          PATH_ID         = items.path,
+          BASE_URL        = 'https://online.theironyard.com',
+          PATH_URL        = BASE_URL + '/admin/paths/' + PATH_ID;
     
     // Get the list of students
-    $.get(pathURL).then( (res) => {
+    $.get(PATH_URL).then( (res) => {
           
-      let rows = $(res).find('.path-tree-level.assignment');
+      let rows = $(res).find('#unit-' + ASSIGNMENT_UNIT + ' .path-tree-level.assignment');
       let promises = [];
       let students = [];
       
@@ -134,11 +136,15 @@
       
       let grade = Math.floor((student.points / totalPoints) * 100);
       
+      console.log('Student Name: ', student.name);
+      console.log('Student Points: ', student.points);
+      console.log('Total Points: ', totalPoints);
+      console.log('----------------------------------');
+      
       let color = function () {
         if (grade > 80) return '#6fbbb7';
         if (grade > 70) return '#f0ad4e';
         if (grade < 70) return '#e74c3c';
-        
       }
       
       tableBody += `<tr>`;
@@ -170,8 +176,8 @@
   }
   
   
-  chrome.storage.sync.get(['path'], function(items) {
-    init(items.path);
+  chrome.storage.sync.get(['path', 'unit'], function(items) {
+    init(items);
   });
   
 }());
