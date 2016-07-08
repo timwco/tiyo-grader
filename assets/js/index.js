@@ -30,20 +30,23 @@
         students.push(newS);
         return newS;
       }
-      
+
       rows.each( (index, row) => {
-        let assignmentURL = $(row).find('a.text-body').attr('href');
-        let promise = $.get(assignmentURL).then( res => {
-          let rows = $(res).find('#submissions tbody tr');
-          let assignmentName = $.trim($(res).find('h4.title strong').text());
-          rows.each( (index, row) => {
-            let studentName = $(row).find('td').eq(0).text();
-            let assignmentStatus = $.trim($(row).find('td').eq(1).find('label').text());
-            let s = locateStudent(studentName);
-            s.assignments.push({ name: assignmentName, status: assignmentStatus });
+        let active = !$(row).find('.js-toggle-hidden').is(':checked');
+        if (active) {
+          let assignmentURL = $(row).find('a.text-body').attr('href');
+          let promise = $.get(assignmentURL).then( res => {
+            let studentRows = $(res).find('#submissions tbody tr');
+            let assignmentName = $.trim($(res).find('h4.title strong').text());
+            studentRows.each( (index, row) => {
+              let studentName = $(row).find('td').eq(0).text();
+              let assignmentStatus = $.trim($(row).find('td').eq(1).find('label').text());
+              let s = locateStudent(studentName);
+              s.assignments.push({ name: assignmentName, status: assignmentStatus });
+            });
           });
-        });
-        promises.push(promise);
+          promises.push(promise);
+        }
       });
       
       Promise.all(promises).then( () => {
@@ -54,8 +57,8 @@
   }
   
   function preloadView () {
-    let nav = $('.nav-tabs');
-    nav.append(`<li id="tw_grades" class="nav-item"><a href="#statuses" class="nav-link" data-toggle="tab">Loading Grades...</a></li>`); 
+    let nav = $('.breadcrumb');
+    nav.after(`<div id="tw_grades" class="card">Loading Grades...</div>`);
   }
   
   
@@ -115,11 +118,7 @@
         
     let tableHTML = statusesTemplate(students, totalPoints);
     
-    $('#tw_grades a').text('View Grades');
-    
-    let tabs = $('.tab-content');
-    tabs.append(`<div id="statuses" class="tab-pane" aria-expanded="true">${ tableHTML }</div>`);
-   
+    $('#tw_grades').html(`<div id="statuses" class="tab-pane" aria-expanded="true">${ tableHTML }</div>`);
   }
   
   
@@ -129,6 +128,8 @@
     
     
     students.forEach( student => {
+
+      console.log(student);
       
       let complete = student.statuses['Complete and satisfactory'].length + student.statuses['Exceeds expectations'].length;
       
@@ -136,10 +137,10 @@
       
       let grade = Math.floor((student.points / totalPoints) * 100);
       
-      console.log('Student Name: ', student.name);
-      console.log('Student Points: ', student.points);
-      console.log('Total Points: ', totalPoints);
-      console.log('----------------------------------');
+      // console.log('Student Name: ', student.name);
+      // console.log('Student Points: ', student.points);
+      // console.log('Total Points: ', totalPoints);
+      // console.log('----------------------------------');
       
       let color = function () {
         if (grade > 80) return '#6fbbb7';

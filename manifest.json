@@ -3,13 +3,13 @@
 
   "name": "TIYO: Stats, Grades & Percent Calculator",
   "description": "...",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "content_scripts": [ {
       "js": [ "assets/js/jquery.js", "assets/js/lodash.js", "assets/js/index.js" ],
       "css": [ "assets/css/main.css" ],
       "matches": [
-        "https://online.theironyard.com/admin"
+        "https://online.theironyard.com/admin/paths/*"
       ]
    } ],
 
