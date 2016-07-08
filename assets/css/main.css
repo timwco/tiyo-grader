@@ -1,0 +1,45 @@
+.tw_fetch {
+  padding: 7px;
+  cursor: pointer;
+  color: #6fbbb7;
+}
+.tw_fetch:hover {
+  text-decoration: underline;
+}
+
+.tw_holder { position: relative; }
+.tw_holder label {
+  cursor: pointer;
+}
+
+ul.tw_badList {
+  display: none;
+  list-style: none;
+  background-color: #656d78;
+  position: absolute;
+  padding: 15px;
+  border-radius: 8px;
+  top: 0;
+  left: 50px;
+  z-index: 9999;
+}
+ul.tw_badList li a {
+  color: #eceeef
+}
+ul.tw_badList li a:hover {
+  text-decoration: underline;
+}
+ul.tw_badList:after {
+	right: 100%;
+	top: 27px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(101, 109, 120, 0);
+	border-right-color: #656d78;
+	border-width: 10px;
+	margin-top: -10px;
+}

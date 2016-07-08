@@ -1,14 +1,21 @@
 ;(function () {
   
   'use strict';
-   
+
   function init (items) {
-    
     if (items.path && items.unit) {
-      preloadView();
+      if (window.location.pathname.indexOf(items.path) > -1){
+        initialView();
+        eventsRun(items);
+      }
     } else {
       return alert('Sorry, you need to set your options first in the extension options.');
     }
+  }
+   
+  function fetchGrades (items) {
+
+    preloadView();
     
     const ASSIGNMENT_UNIT = items.unit,
           PATH_ID         = items.path,
@@ -42,7 +49,7 @@
               let studentName = $(row).find('td').eq(0).text();
               let assignmentStatus = $.trim($(row).find('td').eq(1).find('label').text());
               let s = locateStudent(studentName);
-              s.assignments.push({ name: assignmentName, status: assignmentStatus });
+              s.assignments.push({ name: assignmentName, status: assignmentStatus, link: assignmentURL });
             });
           });
           promises.push(promise);
@@ -55,10 +62,14 @@
        
     });    
   }
+
+  function initialView () {
+    let nav = $('.breadcrumb');
+    nav.after(`<div id="tw_grades" class="card"><div class="tw_fetch">Show Grade Book</div></div>`);    
+  }
   
   function preloadView () {
-    let nav = $('.breadcrumb');
-    nav.after(`<div id="tw_grades" class="card">Loading Grades...</div>`);
+    $('.tw_fetch').html('Fetching Grades...');
   }
   
   
@@ -128,8 +139,6 @@
     
     
     students.forEach( student => {
-
-      console.log(student);
       
       let complete = student.statuses['Complete and satisfactory'].length + student.statuses['Exceeds expectations'].length;
       
@@ -147,10 +156,17 @@
         if (grade > 70) return '#f0ad4e';
         if (grade < 70) return '#e74c3c';
       }
+
+      let badList = student.assignments.filter( asgn => {
+        return asgn.status === 'Incomplete' || asgn.status === 'Complete And Unsatisfactory' || asgn.status === 'Not Submitted';
+      });
+
+      let badListItems = buildBadList(badList);
+
       
       tableBody += `<tr>`;
       tableBody += `<td><span class="user-profile-name">${ student.name }</span></td>`;
-      tableBody += `<td><label class="label label-incomplete">${ incomplete }</td></label>`;
+      tableBody += `<td class="tw_holder"><label class="label label-incomplete tw_toggle">${ incomplete }</label>${badListItems}</td>`;
       tableBody += `<td><label class="label label-complete-and-satisfactory">${ complete }</label></td>`;
       tableBody += `<td colspan="3"><span class="profile-placeholder-medium" style="background-color: ${ color() }">${ grade }</span></td>`;
       tableBody += `<tr>`;
@@ -163,7 +179,7 @@
           <thead class="thead-default">
             <tr>
               <th>Name</th>
-              <th>Missing/Incomplete</th>
+              <th>Missing/Incomplete (click to view)</th>
               <th>Complete</th>
               <th colspan="3">Grade</th>
             </tr>
@@ -176,6 +192,26 @@
     `;
   }
   
+  function buildBadList (badList) {
+    let list = '<ul class="tw_badList">';
+    badList.forEach( item => {
+      list += `<li><a target="_blank" href="${item.link}">${item.name}</a></li>`;
+    });
+    list += '</ul>';
+    return list;
+  }
+
+  function eventsRun (items) {
+
+    $('.col-xs-12').on('click', '.tw_fetch', () => {
+      fetchGrades(items);
+    });
+
+    $('.col-xs-12').on('click', '.tw_toggle', function () {
+      $('.tw_badList').hide();
+      $(this).next().toggle();
+    });
+  }
   
   chrome.storage.sync.get(['path', 'unit'], function(items) {
     init(items);
