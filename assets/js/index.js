@@ -57,6 +57,11 @@
       });
       
       Promise.all(promises).then( () => {
+        // Filter out students no longer in class
+        let outStudents = items.students.split(',');
+        students = students.filter( (student) => {
+          return outStudents.indexOf(student.name) < 0;
+        });
         sortStatuses(students);
       });
        
@@ -126,6 +131,11 @@
   
   
   function buildView (students, totalPoints) {
+
+    // Sort students from lowest score to highest score
+    students.sort(function(a, b) {
+      return (a.points > b.points) ? 1 : ((b.points > a.points) ? -1 : 0);
+    }); 
         
     let tableHTML = statusesTemplate(students, totalPoints);
     
@@ -213,7 +223,7 @@
     });
   }
   
-  chrome.storage.sync.get(['path', 'unit'], function(items) {
+  chrome.storage.sync.get(['path', 'unit', 'students'], function(items) {
     init(items);
   });
   

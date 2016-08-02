@@ -14,16 +14,21 @@
 					<legend>Plugin Options</legend>
 
 					<label for="path">Path ID</label>
-					<input id="path" class="path" type="text" placeholder="Ex: 1234">
+					<input id="path" class="path" type="text" placeholder="Ex: 1234"><br><br>
 
 					<label for="unit">Assignments Unit ID</label>
-					<input id="unit" class="unit" type="text" placeholder="Ex: 1234">
+					<input id="unit" class="unit" type="text" placeholder="Ex: 1234"><br><br>
+
+					<label for="students">List of Students to omit*</label>
+					<input id="students" class="students" type="text" placeholder="Sam Smith, Bill Smith, Stacy Smith">
 					
 					<br>
 
 					<button type="submit" class="pure-button pure-button-primary">Update Options</button>
 			</fieldset>
     </form>
+
+		<small>* This is if you have a student who drops, or you have a TA etc. Also, it should be comma seperated and needs to match the way they show up in TIYO.</small>
 
   </div>
   <script src="../assets/js/options.js"></script>
