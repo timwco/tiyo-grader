@@ -12,7 +12,7 @@ Please follow this format: `name,name,name,name`
 
 #### Installation
 
-1. Download the [latest release](/releases)
+1. Download the [latest release](https://github.com/twhitacre/tiyo-grader/releases)
 2. Unzip the download
 3. Open Chrome Settings (`cmd + ,`)
 4. Click `Load unpacked extension...`
