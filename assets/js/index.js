@@ -99,16 +99,10 @@
   function calculateGrade (students) {
             
     students.forEach( student => {
+      let complete = student.statuses['Complete and satisfactory'].concat(student.statuses['Exceeds expectations']);
       student.points = 0;
-      student.statuses['Complete and satisfactory'].forEach( complete => {
-        if (complete.match(/\*\*/)) {
-          student.points = student.points + 4; // weekend assignment
-        } else {
-          student.points = student.points + 1;
-        }
-      });
-      student.statuses['Exceeds expectations'].forEach( complete => {
-        if (complete.match(/\*\*/)) {
+      complete.forEach( c => {
+        if (c.match(/\*\*/)) {
           student.points = student.points + 4; // weekend assignment
         } else {
           student.points = student.points + 1;
@@ -159,6 +153,7 @@
       // console.log('Student Name: ', student.name);
       // console.log('Student Points: ', student.points);
       // console.log('Total Points: ', totalPoints);
+      // console.log(student);
       // console.log('----------------------------------');
       
       let color = function () {
