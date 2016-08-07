@@ -3,7 +3,7 @@
 
   "name": "TIYO: Stats, Grades & Percent Calculator",
   "description": "...",
-  "version": "1.1.0",
+  "version": "1.2.0",
 
   "content_scripts": [ {
       "js": [ "assets/js/jquery.js", "assets/js/lodash.js", "assets/js/index.js" ],

@@ -6,12 +6,17 @@ It will remove anyone who has never completed an assignment (TA's, Observers, et
 
 You need to open the `options` page and set your Path & Assignments Unit ID for the extension to work. See the [Gettting the ID's](#getting-the-ids) below.
 
+There is also a way to set a list of students who have dropped the class or who should not be counted (like TA's). 
+
+Please follow this format: `name,name,name,name`
+
 #### Installation
 
-1. Clone this repo
-2. Open Chrome Settings (`cmd + ,`)
-3. Click `Load unpacked extension...`
-4. Navigate to this folder and choose `select`
+1. Download the [latest release](/releases)
+2. Unzip the download
+3. Open Chrome Settings (`cmd + ,`)
+4. Click `Load unpacked extension...`
+5. Navigate to this folder and choose `select`
 
 #### TIYO Setup
 
@@ -57,4 +62,3 @@ Here's how I do grading...
 
 `(((Completed Weekend * 4) + (Completed Daily * 1)) / ((Total Weekend * 4) + (Total Daily * 1)) * 100)`
 
-This gives me a course completion or "grade". Ideally I personally look for 80% or heigher for graduation.
